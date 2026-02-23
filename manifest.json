@@ -1,0 +1,78 @@
+{
+  "name": "Personal OS",
+  "short_name": "PersonalOS",
+  "description": "A personal operating system for the web - portfolio, blog, and more",
+  "start_url": "/personal-os/",
+  "display": "standalone",
+  "background_color": "#fafafa",
+  "theme_color": "#0a0a0a",
+  "orientation": "portrait-primary",
+  "scope": "/personal-os/",
+  "icons": [
+    {
+      "src": "/personal-os/icons/icon-72x72.png",
+      "sizes": "72x72",
+      "type": "image/png",
+      "purpose": "maskable any"
+    },
+    {
+      "src": "/personal-os/icons/icon-96x96.png",
+      "sizes": "96x96",
+      "type": "image/png",
+      "purpose": "maskable any"
+    },
+    {
+      "src": "/personal-os/icons/icon-128x128.png",
+      "sizes": "128x128",
+      "type": "image/png",
+      "purpose": "maskable any"
+    },
+    {
+      "src": "/personal-os/icons/icon-144x144.png",
+      "sizes": "144x144",
+      "type": "image/png",
+      "purpose": "maskable any"
+    },
+    {
+      "src": "/personal-os/icons/icon-152x152.png",
+      "sizes": "152x152",
+      "type": "image/png",
+      "purpose": "maskable any"
+    },
+    {
+      "src": "/personal-os/icons/icon-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "maskable any"
+    },
+    {
+      "src": "/personal-os/icons/icon-384x384.png",
+      "sizes": "384x384",
+      "type": "image/png",
+      "purpose": "maskable any"
+    },
+    {
+      "src": "/personal-os/icons/icon-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable any"
+    }
+  ],
+  "categories": ["productivity", "personalization"],
+  "shortcuts": [
+    {
+      "name": "Writing",
+      "short_name": "Blog",
+      "description": "Read latest posts",
+      "url": "/personal-os/writing",
+      "icons": [{ "src": "/personal-os/icons/icon-96x96.png", "sizes": "96x96" }]
+    },
+    {
+      "name": "Work",
+      "short_name": "Work",
+      "description": "View projects",
+      "url": "/personal-os/work",
+      "icons": [{ "src": "/personal-os/icons/icon-96x96.png", "sizes": "96x96" }]
+    }
+  ]
+}

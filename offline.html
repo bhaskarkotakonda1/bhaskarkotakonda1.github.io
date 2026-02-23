@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Offline - Personal OS</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+      color: #e4e4e7;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 1rem;
+    }
+
+    .container {
+      text-align: center;
+      max-width: 400px;
+    }
+
+    .icon {
+      width: 80px;
+      height: 80px;
+      margin: 0 auto 1.5rem;
+      background: rgba(99, 102, 241, 0.2);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .icon svg {
+      width: 40px;
+      height: 40px;
+      stroke: #818cf8;
+    }
+
+    h1 {
+      font-size: 1.5rem;
+      font-weight: 600;
+      margin-bottom: 0.75rem;
+      color: #f4f4f5;
+    }
+
+    p {
+      color: #a1a1aa;
+      line-height: 1.6;
+      margin-bottom: 1.5rem;
+    }
+
+    .status {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.5rem 1rem;
+      background: rgba(239, 68, 68, 0.15);
+      border: 1px solid rgba(239, 68, 68, 0.3);
+      border-radius: 9999px;
+      font-size: 0.875rem;
+      color: #fca5a5;
+      margin-bottom: 2rem;
+    }
+
+    .status-dot {
+      width: 8px;
+      height: 8px;
+      background: #ef4444;
+      border-radius: 50%;
+      animation: pulse 2s infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.5; }
+    }
+
+    .actions {
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+    }
+
+    button {
+      padding: 0.75rem 1.5rem;
+      border-radius: 0.5rem;
+      font-size: 0.875rem;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.2s;
+      border: none;
+    }
+
+    .btn-primary {
+      background: #6366f1;
+      color: white;
+    }
+
+    .btn-primary:hover {
+      background: #4f46e5;
+    }
+
+    .btn-secondary {
+      background: transparent;
+      color: #a1a1aa;
+      border: 1px solid #3f3f46;
+    }
+
+    .btn-secondary:hover {
+      background: rgba(255, 255, 255, 0.05);
+      color: #e4e4e7;
+    }
+
+    .cached-pages {
+      margin-top: 2rem;
+      padding-top: 1.5rem;
+      border-top: 1px solid #27272a;
+    }
+
+    .cached-pages h2 {
+      font-size: 0.875rem;
+      font-weight: 500;
+      color: #71717a;
+      margin-bottom: 1rem;
+    }
+
+    .cached-pages ul {
+      list-style: none;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      justify-content: center;
+    }
+
+    .cached-pages a {
+      color: #818cf8;
+      text-decoration: none;
+      padding: 0.25rem 0.75rem;
+      background: rgba(99, 102, 241, 0.1);
+      border-radius: 0.25rem;
+      font-size: 0.875rem;
+      transition: background 0.2s;
+    }
+
+    .cached-pages a:hover {
+      background: rgba(99, 102, 241, 0.2);
+    }
+
+    #online-status {
+      display: none;
+    }
+
+    #online-status.online {
+      display: block;
+      padding: 1rem;
+      background: rgba(34, 197, 94, 0.15);
+      border: 1px solid rgba(34, 197, 94, 0.3);
+      border-radius: 0.5rem;
+      color: #86efac;
+      margin-bottom: 1.5rem;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="icon">
+      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v3.75m-9.303 3.376c-.866 1.5.217 3.374 1.948 3.374h14.71c1.73 0 2.813-1.874 1.948-3.374L13.949 3.378c-.866-1.5-3.032-1.5-3.898 0L2.697 16.126zM12 15.75h.007v.008H12v-.008z" />
+      </svg>
+    </div>
+
+    <div id="online-status"></div>
+
+    <div class="status">
+      <span class="status-dot"></span>
+      You're offline
+    </div>
+
+    <h1>No internet connection</h1>
+    <p>
+      Don't worry — your local data is safe. Any changes you've made will sync 
+      automatically when you're back online.
+    </p>
+
+    <div class="actions">
+      <button class="btn-primary" onclick="tryReconnect()">
+        Try again
+      </button>
+      <button class="btn-secondary" onclick="goHome()">
+        Go to homepage
+      </button>
+    </div>
+
+    <div class="cached-pages">
+      <h2>Available offline</h2>
+      <ul id="cached-list">
+        <li><a href="/">Home</a></li>
+      </ul>
+    </div>
+  </div>
+
+  <script>
+    // Check connection and redirect if online
+    function tryReconnect() {
+      if (navigator.onLine) {
+        window.location.reload();
+      } else {
+        alert('Still offline. Please check your connection.');
+      }
+    }
+
+    function goHome() {
+      window.location.href = '/';
+    }
+
+    // Listen for online event
+    window.addEventListener('online', () => {
+      const status = document.getElementById('online-status');
+      status.classList.add('online');
+      status.textContent = '🎉 You\'re back online! Redirecting...';
+      setTimeout(() => window.location.reload(), 1500);
+    });
+
+    // Populate cached pages
+    async function loadCachedPages() {
+      if (!('caches' in window)) return;
+
+      try {
+        const cacheNames = await caches.keys();
+        const urls = new Set();
+
+        for (const name of cacheNames) {
+          const cache = await caches.open(name);
+          const requests = await cache.keys();
+          
+          requests.forEach((req) => {
+            const url = new URL(req.url);
+            if (url.pathname !== '/offline.html' && !url.pathname.startsWith('/_astro')) {
+              urls.add(url.pathname);
+            }
+          });
+        }
+
+        const list = document.getElementById('cached-list');
+        list.innerHTML = '';
+        
+        [...urls].sort().forEach((path) => {
+          const li = document.createElement('li');
+          const a = document.createElement('a');
+          a.href = path;
+          a.textContent = path === '/' ? 'Home' : path.replace(/^\/|\/$/g, '');
+          li.appendChild(a);
+          list.appendChild(li);
+        });
+      } catch (err) {
+        console.error('Failed to load cached pages:', err);
+      }
+    }
+
+    loadCachedPages();
+  </script>
+</body>
+</html>
