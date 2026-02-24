@@ -1,8 +1,8 @@
 // Service Worker for Personal OS PWA
 const CACHE_VERSION = 'v2';
-const SHELL_CACHE = `personal-os-shell-${CACHE_VERSION}`;
-const STATIC_CACHE = `personal-os-static-${CACHE_VERSION}`;
-const RUNTIME_CACHE = `personal-os-runtime-${CACHE_VERSION}`;
+const SHELL_CACHE = `bhaskar-kotakonda-shell-${CACHE_VERSION}`;
+const STATIC_CACHE = `bhaskar-kotakonda-static-${CACHE_VERSION}`;
+const RUNTIME_CACHE = `bhaskar-kotakonda-runtime-${CACHE_VERSION}`;
 
 // Shell assets - cached on install
 const SHELL_ASSETS = [
@@ -46,7 +46,7 @@ self.addEventListener('activate', (event) => {
     caches.keys().then((cacheNames) => {
       return Promise.all(
         cacheNames
-          .filter((name) => name.startsWith('personal-os-') && !currentCaches.includes(name))
+          .filter((name) => name.startsWith('bhaskar-kotakonda-') && !currentCaches.includes(name))
           .map((name) => {
             console.log('[SW] Deleting old cache:', name);
             return caches.delete(name);
