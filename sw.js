@@ -6,9 +6,9 @@ const RUNTIME_CACHE = `personal-os-runtime-${CACHE_VERSION}`;
 
 // Shell assets - cached on install
 const SHELL_ASSETS = [
-  '/personal-os/',
-  '/personal-os/offline.html',
-  '/personal-os/manifest.json',
+  '/',
+  '/offline.html',
+  '/manifest.json',
 ];
 
 // Static asset patterns (cache-first)
